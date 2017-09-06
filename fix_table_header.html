@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>
+    <title>fix table header</title>
+    <style>
+        #result {width:94%;padding-left:3%;overflow-x: hidden;} 
+        #tbl_result {border:1px solid #ddd;}
+        
+        a                  {cursor: pointer;}
+        input[type=number] {width:90%;text-align:right;}
+        input.upper100     {width:90%;text-transform:uppercase;}  
+        .tick              {text-align:center;}    
+        .Column_7          {background-color:lightblue;width:100%;}   
+       
+       
+        /*table fix header*/
+        table.fix_table       {border-collapse: collapse; display: flex; flex-flow: column; }  
+        table.fix_table>thead {   /* head takes the height it requires, 
+                                  and it's not scaled when table is resized */ 
+                                  display: block;   
+                                  overflow-x: hidden;    
+                                  width: calc(100% - 0.95em);
+                              }
+        table.fix_table>tbody {   /* body takes all the remaining available space */ 
+                                  display: block;  
+                                  overflow-y: scroll;
+                                  height: 200px;
+                              }  
+         table.fix_table>thead>tr,
+         table.fix_table>tbody>tr             {display: flex;}
+        
+         table.fix_table>thead>tr>th,           
+         table.fix_table>thead>tr>td,
+         table.fix_table>tbody>tr>td          {flex:2 1 auto;width:90px;border:1px solid #ddd;}  
+         table.fix_table>thead>tr>th          {background: lightyellow;}   
+         table.fix_table>thead>tr>td          {border:0;}
+          
+         table.fix_table>thead>tr>th.tick,
+         table.fix_table>thead>tr>td.tick,
+         table.fix_table>tbody>tr>td.tick     {flex:0 0 auto;width:25px;}  
+         table.fix_table>thead>tr>th.seq,
+         table.fix_table>thead>tr>td.seq,
+         table.fix_table>tbody>tr>td.seq,
+         table.fix_table>thead>tr>th.gps,
+         table.fix_table>thead>tr>td.gps,
+         table.fix_table>tbody>tr>td.gps      {flex:0 0 auto;width:40px;}   
+        
+    </style>  
+</head>
+<body>
+   <div id='result'>  
+    <div class='panel-body row'> 
+        <table class='table-list table-bordered fix_table' id='tbl_result'> 
+         <thead>
+          <tr id="filterTable">
+             <td class='tick'></td><td class='seq'></td>
+             <td><input type='text' maxlength='5' size='5' class='upper100'></td> 
+             <td><input type='text' maxlength='5' size='5' class='upper100'></td> 
+             <td><input type='text' maxlength='5' size='5' class='upper100'></td> 
+             <td><input type='text' maxlength='5' size='5' class='upper100'></td>
+             <td></td> 
+             <td><input type='number' pattern='[0-9.,]+' class='searchA'></td> 
+             <td><input type='number' pattern='[0-9.,]+' class='searchB'></td>
+             <td><input type='number' pattern='[0-9.,]+' class='searchC'></td>
+             <td></td><td></td><td></td><td class='gps'></td> 
+          </tr>  
+          <tr>
+             <th class='tick'><input type='checkbox' name='chk' value=''></th>
+             <th class='sort seq' >SEQ</th>
+             <th class='sort'     >Col1</th>
+             <th class='sort'     >Col2</th>
+             <th class='sort'     >Col3</th>
+             <th class='sort'     >Col4</th>
+             <th>Currency</th>
+             <th class='sort rate'>A Rate</th>
+             <th class='sort rate'>B Rate</th>
+             <th class='sort rate'>C Rate</th>
+             <th class='sort'     >Col5</th>
+             <th class='sort'     >Col6</th>
+             <th>Column_7</th>
+             <th class='gps'>GPS</th> 
+          </tr>
+         </thead>
+         <tbody id="searchBody" >
+             <tr>
+               <td class='tick'><input type='checkbox' name='chk' value=''></td>
+               <td class='seq'><span name='Seq'>0001</span></td> 
+               <td><input type='text' name='Col1' value='Col1' maxlength='5' size='5' class='upper100'></td>
+               <td><input type='text' name='Col2' value='Col2' maxlength='5' size='5' class='upper100'></td>
+               <td><input type='text' name='Col3' value='Col3' maxlength='5' size='5' class='upper100'></td>
+               <td><input type='text' name='Col4' value='Col4' maxlength='5' size='5' class='upper100'></td>
+               <td><input type='text' name='Cur' value='EUR' maxlength='3' size='3' class='upper100'></td>
+               <td class='searchA'><input type='number' name='A' value='2001' max='9999999.99' min='0'></td>
+               <td class='searchB'><input type='number' name='B' value='2002' max='9999999.99' min='0'></td>
+               <td class='searchC'><input type='number' name='C' value='4001' max='9999999.99' min='0'></td>
+               <td><input type='text' name='col5' value='1' maxlength='1' size='1' class='upper100'></td>
+               <td><input type='text' name='col6' value='AOA' maxlength='3' size='3' class='upper100'></td>
+               <td><input type='button' value='SET' Column_7'></td>
+               <td class='gps'></td>
+             </tr>
+             <tr>
+               <td class='tick'><input type='checkbox' name='chk' value=''></td>
+               <td class='seq'><span name='Seq'>0002</span></td> 
+               <td><input type='text' name='Col1' value='Col1' maxlength='5' size='5' class='upper100'></td>
+               <td><input type='text' name='Col2' value='Col2' maxlength='5' size='5' class='upper100'></td>
+               <td><input type='text' name='Col3' value='Col3' maxlength='5' size='5' class='upper100'></td>
+               <td><input type='text' name='Col4' value='Col4' maxlength='5' size='5' class='upper100'></td>
+               <td><input type='text' name='Cur' value='EUR' maxlength='3' size='3' class='upper100'></td>
+               <td class='searchA'><input type='number' name='A' value='2001' max='9999999.99' min='0'></td>
+               <td class='searchB'><input type='number' name='B' value='2002' max='9999999.99' min='0'></td>
+               <td class='searchC'><input type='number' name='C' value='4001' max='9999999.99' min='0'></td>
+               <td><input type='text' name='col5' value='1' maxlength='1' size='1' class='upper100'></td>
+               <td><input type='text' name='col6' value='AOA' maxlength='3' size='3' class='upper100'></td>
+               <td><input type='button' value='SET' Column_7'></td>
+               <td class='gps'></td>
+             </tr>
+             <tr>
+               <td class='tick'><input type='checkbox' name='chk' value=''></td>
+               <td class='seq'><span name='Seq'>0003</span></td> 
+               <td><input type='text' name='Col1' value='Col1' maxlength='5' size='5' class='upper100'></td>
+               <td><input type='text' name='Col2' value='Col2' maxlength='5' size='5' class='upper100'></td>
+               <td><input type='text' name='Col3' value='Col3' maxlength='5' size='5' class='upper100'></td>
+               <td><input type='text' name='Col4' value='Col4' maxlength='5' size='5' class='upper100'></td>
+               <td><input type='text' name='Cur' value='EUR' maxlength='3' size='3' class='upper100'></td>
+               <td class='searchA'><input type='number' name='A' value='2001' max='9999999.99' min='0'></td>
+               <td class='searchB'><input type='number' name='B' value='2002' max='9999999.99' min='0'></td>
+               <td class='searchC'><input type='number' name='C' value='4001' max='9999999.99' min='0'></td>
+               <td><input type='text' name='col5' value='1' maxlength='1' size='1' class='upper100'></td>
+               <td><input type='text' name='col6' value='AOA' maxlength='3' size='3' class='upper100'></td>
+               <td><input type='button' value='SET' Column_7'></td>
+               <td class='gps'></td>
+             </tr>
+             <tr>
+               <td class='tick'><input type='checkbox' name='chk' value=''></td>
+               <td class='seq'><span name='Seq'>0004</span></td> 
+               <td><input type='text' name='Col1' value='Col1' maxlength='5' size='5' class='upper100'></td>
+               <td><input type='text' name='Col2' value='Col2' maxlength='5' size='5' class='upper100'></td>
+               <td><input type='text' name='Col3' value='Col3' maxlength='5' size='5' class='upper100'></td>
+               <td><input type='text' name='Col4' value='Col4' maxlength='5' size='5' class='upper100'></td>
+               <td><input type='text' name='Cur' value='EUR' maxlength='3' size='3' class='upper100'></td>
+               <td class='searchA'><input type='number' name='A' value='2001' max='9999999.99' min='0'></td>
+               <td class='searchB'><input type='number' name='B' value='2002' max='9999999.99' min='0'></td>
+               <td class='searchC'><input type='number' name='C' value='4001' max='9999999.99' min='0'></td>
+               <td><input type='text' name='col5' value='1' maxlength='1' size='1' class='upper100'></td>
+               <td><input type='text' name='col6' value='AOA' maxlength='3' size='3' class='upper100'></td>
+               <td><input type='button' value='SET' Column_7'></td>
+               <td class='gps'></td>
+             </tr>
+             <tr>
+               <td class='tick'><input type='checkbox' name='chk' value=''></td>
+               <td class='seq'><span name='Seq'>0005</span></td> 
+               <td><input type='text' name='Col1' value='Col1' maxlength='5' size='5' class='upper100'></td>
+               <td><input type='text' name='Col2' value='Col2' maxlength='5' size='5' class='upper100'></td>
+               <td><input type='text' name='Col3' value='Col3' maxlength='5' size='5' class='upper100'></td>
+               <td><input type='text' name='Col4' value='Col4' maxlength='5' size='5' class='upper100'></td>
+               <td><input type='text' name='Cur' value='EUR' maxlength='3' size='3' class='upper100'></td>
+               <td class='searchA'><input type='number' name='A' value='2001' max='9999999.99' min='0'></td>
+               <td class='searchB'><input type='number' name='B' value='2002' max='9999999.99' min='0'></td>
+               <td class='searchC'><input type='number' name='C' value='4001' max='9999999.99' min='0'></td>
+               <td><input type='text' name='col5' value='1' maxlength='1' size='1' class='upper100'></td>
+               <td><input type='text' name='col6' value='AOA' maxlength='3' size='3' class='upper100'></td>
+               <td><input type='button' value='SET' Column_7'></td>
+               <td class='gps'></td>
+             </tr>
+             <tr>
+               <td class='tick'><input type='checkbox' name='chk' value=''></td>
+               <td class='seq'><span name='Seq'>0006</span></td> 
+               <td><input type='text' name='Col1' value='Col1' maxlength='5' size='5' class='upper100'></td>
+               <td><input type='text' name='Col2' value='Col2' maxlength='5' size='5' class='upper100'></td>
+               <td><input type='text' name='Col3' value='Col3' maxlength='5' size='5' class='upper100'></td>
+               <td><input type='text' name='Col4' value='Col4' maxlength='5' size='5' class='upper100'></td>
+               <td><input type='text' name='Cur' value='EUR' maxlength='3' size='3' class='upper100'></td>
+               <td class='searchA'><input type='number' name='A' value='2001' max='9999999.99' min='0'></td>
+               <td class='searchB'><input type='number' name='B' value='2002' max='9999999.99' min='0'></td>
+               <td class='searchC'><input type='number' name='C' value='4001' max='9999999.99' min='0'></td>
+               <td><input type='text' name='col5' value='1' maxlength='1' size='1' class='upper100'></td>
+               <td><input type='text' name='col6' value='AOA' maxlength='3' size='3' class='upper100'></td>
+               <td><input type='button' value='SET' Column_7'></td>
+               <td class='gps'></td>
+             </tr>
+             <tr>
+               <td class='tick'><input type='checkbox' name='chk' value=''></td>
+               <td class='seq'><span name='Seq'>0008</span></td> 
+               <td><input type='text' name='Col1' value='Col1' maxlength='5' size='5' class='upper100'></td>
+               <td><input type='text' name='Col2' value='Col2' maxlength='5' size='5' class='upper100'></td>
+               <td><input type='text' name='Col3' value='Col3' maxlength='5' size='5' class='upper100'></td>
+               <td><input type='text' name='Col4' value='Col4' maxlength='5' size='5' class='upper100'></td>
+               <td><input type='text' name='Cur' value='EUR' maxlength='3' size='3' class='upper100'></td>
+               <td class='searchA'><input type='number' name='A' value='2001' max='9999999.99' min='0'></td>
+               <td class='searchB'><input type='number' name='B' value='2002' max='9999999.99' min='0'></td>
+               <td class='searchC'><input type='number' name='C' value='4001' max='9999999.99' min='0'></td>
+               <td><input type='text' name='col5' value='1' maxlength='1' size='1' class='upper100'></td>
+               <td><input type='text' name='col6' value='AOA' maxlength='3' size='3' class='upper100'></td>
+               <td><input type='button' value='SET' Column_7'></td>
+               <td class='gps'></td>
+             </tr>
+             <tr>
+               <td class='tick'><input type='checkbox' name='chk' value=''></td>
+               <td class='seq'><span name='Seq'>0009</span></td> 
+               <td><input type='text' name='Col1' value='Col1' maxlength='5' size='5' class='upper100'></td>
+               <td><input type='text' name='Col2' value='Col2' maxlength='5' size='5' class='upper100'></td>
+               <td><input type='text' name='Col3' value='Col3' maxlength='5' size='5' class='upper100'></td>
+               <td><input type='text' name='Col4' value='Col4' maxlength='5' size='5' class='upper100'></td>
+               <td><input type='text' name='Cur' value='EUR' maxlength='3' size='3' class='upper100'></td>
+               <td class='searchA'><input type='number' name='A' value='2001' max='9999999.99' min='0'></td>
+               <td class='searchB'><input type='number' name='B' value='2002' max='9999999.99' min='0'></td>
+               <td class='searchC'><input type='number' name='C' value='4001' max='9999999.99' min='0'></td>
+               <td><input type='text' name='col5' value='1' maxlength='1' size='1' class='upper100'></td>
+               <td><input type='text' name='col6' value='AOA' maxlength='3' size='3' class='upper100'></td>
+               <td><input type='button' value='SET' Column_7'></td>
+               <td class='gps'></td>
+             </tr>
+             <tr>
+               <td class='tick'><input type='checkbox' name='chk' value=''></td>
+               <td class='seq'><span name='Seq'>0010</span></td> 
+               <td><input type='text' name='Col1' value='Col1' maxlength='5' size='5' class='upper100'></td>
+               <td><input type='text' name='Col2' value='Col2' maxlength='5' size='5' class='upper100'></td>
+               <td><input type='text' name='Col3' value='Col3' maxlength='5' size='5' class='upper100'></td>
+               <td><input type='text' name='Col4' value='Col4' maxlength='5' size='5' class='upper100'></td>
+               <td><input type='text' name='Cur' value='EUR' maxlength='3' size='3' class='upper100'></td>
+               <td class='searchA'><input type='number' name='A' value='2001' max='9999999.99' min='0'></td>
+               <td class='searchB'><input type='number' name='B' value='2002' max='9999999.99' min='0'></td>
+               <td class='searchC'><input type='number' name='C' value='4001' max='9999999.99' min='0'></td>
+               <td><input type='text' name='col5' value='1' maxlength='1' size='1' class='upper100'></td>
+               <td><input type='text' name='col6' value='AOA' maxlength='3' size='3' class='upper100'></td>
+               <td><input type='button' value='SET' Column_7'></td>
+               <td class='gps'></td>
+             </tr>
+         </tbody>
+        </table>     
+    </div> 
+   </div>   
+</body>
+</html>    
